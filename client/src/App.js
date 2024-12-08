@@ -1,10 +1,13 @@
-import { CssBaseline,ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { themeSettings } from "theme";
+import ProtectedRoute from "components/ProtectedRoutes";
 import Dashboard from "scenes/dashboard";
+import Login from "scenes/auth/login";
+import Signup from "scenes/auth/signup";
 import Layout from "scenes/layout";
 
 function App() {
@@ -14,11 +17,21 @@ function App() {
     <div className="app">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          <CssBaseline/> 
+          <CssBaseline />
           <Routes>
-            <Route element={<Layout/>}>
-              <Route path="/" element={<Navigate to = "dashboard" replace/>}/>
-              <Route path="/dashboard" element={<Dashboard/>}/>
+            <Route path="/" element={<Login />} />
+            <Route path="/signin" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route element={<Layout />}>
+              {/* <Route path="/" element={<Navigate to = "dashboard" replace/>}/> */}
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
           </Routes>
         </ThemeProvider>

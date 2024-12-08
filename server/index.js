@@ -21,14 +21,27 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
 app.use(cookieParser());
 // Routes
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
 
 app.use("/api/client", clientRoutes);
 app.use("/api/general", generalRoutes);
 app.use("/api/management", managementRoutes);
 app.use("/api/auth", authRoutes);
+
+
+app.use(cors({
+  origin: "http://localhost:3000", // URL FE
+  credentials: true, // Để cho phép gửi cookie
+}));
 
 // Mongoose setup
 const PORT = process.env.PORT || 9000;
