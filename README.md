@@ -34,6 +34,24 @@ This is a full-stack HR Management System built with React, Redux, and Node.js. 
 - Node.js
 - MongoDB
 
+## Install Dependencies
+### Backend
+- cd server
+- npm install
+
+### Fronent
+- cd client
+- npm install
+
+## Running the Application
+### Backend
+- cd server
+- npm start
+
+### Frontend
+- cd client
+- npm start
+
 ### Clone the Repository
 
 ```sh
