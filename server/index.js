@@ -11,6 +11,7 @@ import clientRoutes from "./routes/client.js";
 import generalRoutes from "./routes/general.js";
 import managementRoutes from "./routes/management.js";
 import authRoutes from "./routes/auth.js";
+import debugRoutes from "./routes/debug.js";
 
 // Configuration
 dotenv.config();
@@ -36,6 +37,7 @@ app.use("/api/client", clientRoutes);
 app.use("/api/general", generalRoutes);
 app.use("/api/management", managementRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/debug", debugRoutes);
 
 
 app.use(cors({
