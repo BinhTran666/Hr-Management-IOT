@@ -8,6 +8,7 @@ import ProtectedRoute from "components/ProtectedRoutes";
 import Dashboard from "scenes/dashboard";
 import Login from "scenes/auth/login";
 import Signup from "scenes/auth/signup";
+import Employee from "scenes/content/employee";
 import Layout from "scenes/layout";
 
 function App() {
@@ -29,6 +30,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/employee"
+                element={
+                  <ProtectedRoute>
+                    <Employee />
                   </ProtectedRoute>
                 }
               />

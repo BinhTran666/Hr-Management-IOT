@@ -47,7 +47,7 @@ const navItems = [
         icon: null,
     },
     {
-        text: "Employees",
+        text: "Employee",
         icon: <Groups2Outlined />,
     },
     {
@@ -87,6 +87,7 @@ const navItems = [
 
 
 const Sidebar = ({
+    user,
     drawerWidth,
     isSidebarOpen,
     setIsSidebarOpen,
@@ -140,7 +141,7 @@ const Sidebar = ({
                             {navItems.map(({text, icon}) => {
                                 if(!icon)  {
                                     return (
-                                        <Typography key = {text} sx={{m: "2.25rem 0 1rem 3rem"}}>
+                                        <Typography key = {text} sx={{m: "2rem 0 1rem 3rem"}}>
                                             {text}
                                         </Typography>
                                     )
@@ -175,6 +176,32 @@ const Sidebar = ({
                                 );
                             })}
                             </List>
+                    </Box>
+
+                    <Box  bottom="2rem">
+                        <Divider />
+                        <FLexBetween textTransform="none" gap="1rem" m="1.5rem 2rem 0 3rem">
+                            <Box
+                                component="img"
+                                alt='profile'
+                                src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
+                                height="40px"
+                                width="40px"
+                                borderRadius="50%"
+                                sx={{objectFit: "cover"}}
+                            />
+                            <Box textAlign="left">
+                                <Typography fontSize="0.9rem" fontWeight="bold" sx={{color: theme.palette.secondary[100]}}>
+                                    {user.name}
+                                </Typography>
+                            </Box>
+                            <SettingsOutlined 
+                                sx={{
+                                    color: theme.palette.secondary[300],
+                                    fontSize: "25px",
+                                }}
+                            />
+                        </FLexBetween>
                     </Box>
                 </Drawer>    
             )}

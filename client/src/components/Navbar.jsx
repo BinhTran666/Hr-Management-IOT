@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   LightModeOutlined,
   DarkModeOutlined,
@@ -18,11 +18,21 @@ import {
   Typography,
   IconButton,
   InputBase,
+  Box,
+  Button,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 
-const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const isOpen = Boolean(anchorEl);
+
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
 
   return (
     <AppBar
@@ -63,6 +73,51 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
           <IconButton>
             <SettingsOutlined />
           </IconButton>
+          <FLexBetween>
+            <Button
+              onClick={handleClick}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "1rem",
+                textTransform: "none",
+              }}
+            >
+              <Box
+                component="img"
+                alt="profile"
+                src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
+                height="32px"
+                width="32px"
+                borderRadius="50%"
+                sx={{ objectFit: "cover" }}
+              />
+              <Box textAlign="left">
+                <Typography
+                  fontSize="0.85rem"
+                  fontWeight="bold"
+                  sx={{ color: theme.palette.secondary[100] }}
+                >
+                  {user.name}
+                </Typography>
+              </Box>
+              <ArrowDropDownOutlined
+                sx={{ color: theme.palette.secondary[300], fontSize: "25px" }}
+              />
+            </Button>
+            <Menu
+              anchorEl={anchorEl}
+              open={isOpen}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+            >
+              <MenuItem onClick={handleClose}>Log Out</MenuItem>
+            </Menu>
+          </FLexBetween>
         </FLexBetween>
       </Toolbar>
     </AppBar>

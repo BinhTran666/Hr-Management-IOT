@@ -7,12 +7,11 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 import e from "express";
-import clientRoutes from "./routes/client.js";
+import employeeRoutes from "./routes/employee.js";
 import generalRoutes from "./routes/general.js";
 import managementRoutes from "./routes/management.js";
 import authRoutes from "./routes/auth.js";
 import debugRoutes from "./routes/debug.js";
-
 // Configuration
 dotenv.config();
 const app = express();
@@ -33,7 +32,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/client", clientRoutes);
+app.use("/api/employee", employeeRoutes);
 app.use("/api/general", generalRoutes);
 app.use("/api/management", managementRoutes);
 app.use("/api/auth", authRoutes);
