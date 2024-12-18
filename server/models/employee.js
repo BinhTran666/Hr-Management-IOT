@@ -1,29 +1,46 @@
 import mongoose from "mongoose";
 
-const employeeSchema = new mongoose.Schema({
-    email:{
-        type:String,
-        required:true,
-        unique:true
+const employeeSchema = new mongoose.Schema(
+  {
+    employee_id: {
+      type: Number,
+      unique: true, // Ensure uniqueness
+      min: 22127000, // Set minimum value
+      max: 22127999, // Set maximum value
     },
-    password:{
-        type:String,
-        required:true,
+    email: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    name:{
-        type:String,
-        required:true
+    password: {
+      type: String,
+      required: true,
     },
-    gender:{
-        type:String,
-        enum: ['Male', 'Female', 'Other'],
-        default: 'Other'
+    name: {
+      type: String,
+      required: true,
+    },
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Other"],
+      default: "Other",
     },
     role: {
-        type: String,
-        enum: ['Engineer', 'Tester', 'Designer', 'Quality Control', 'Fresher', 'Intern'],
-        default: 'Fresher'
+      type: String,
+      enum: [
+        "Engineer",
+        "Tester",
+        "Designer",
+        "Quality Control",
+        "Fresher",
+        "Intern",
+      ],
+      default: "Fresher",
     },
-},{timestamps:true});
+  },
+  { timestamps: true }
+);
 
-export const Employee = mongoose.model('Employee',employeeSchema);
+
+export const Employee = mongoose.model("Employee", employeeSchema);

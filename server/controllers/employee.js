@@ -9,11 +9,28 @@ export const createEmployee = async (req, res) => {
 
     // Hash the password
     const hashedPassword = await bcryptjs.hash(password, 10);
+
+    const lastEmployee = await Employee.findOne({}, { employee_id: 1 })
+      .sort({ employee_id: -1 })
+      .exec();
+
+    let nextId;
+    if (lastEmployee && !isNaN(lastEmployee.employee_id)) {
+      nextId = lastEmployee.employee_id + 1;
+    } else {
+      nextId = 22127000; // Start from the beginning of the range
+    }
+
+    if (nextId > 22127999) {
+      return res
+        .status(400)
+        .json({ error: "Maximum employee ID limit reached." });
+    }
     // Create a new employee object with the extracted fields
     const employee = new Employee({
+      employee_id: nextId, 
       email,
       password: hashedPassword,
-      ID_Employee, 
       name,
       gender,
       role,
@@ -61,7 +78,7 @@ export const updateEmployee = async (req, res) => {
       {
         email,
         password,
-        ID_Employee, 
+        ID_Employee,
         name,
         role,
       },
