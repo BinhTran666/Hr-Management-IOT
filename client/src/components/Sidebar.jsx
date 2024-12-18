@@ -178,9 +178,9 @@ const Sidebar = ({
                             </List>
                     </Box>
 
-                    <Box  bottom="2rem">
+                    <Box position="absolute" bottom="12px">
                         <Divider />
-                        <FLexBetween textTransform="none" gap="1rem" m="1.5rem 2rem 0 3rem">
+                        <FLexBetween textTransform="none" gap="1rem" m="1rem 2rem 0rem 3rem">
                             <Box
                                 component="img"
                                 alt='profile'
