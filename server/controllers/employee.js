@@ -13,6 +13,7 @@ export const createEmployee = async (req, res) => {
     const employee = new Employee({
       email,
       password: hashedPassword,
+      ID_Employee, 
       name,
       gender,
       role,
@@ -60,6 +61,7 @@ export const updateEmployee = async (req, res) => {
       {
         email,
         password,
+        ID_Employee, 
         name,
         role,
       },
