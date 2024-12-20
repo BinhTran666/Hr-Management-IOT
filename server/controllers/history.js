@@ -24,7 +24,7 @@ export const checkIn = async (req, res) => {
     await historyEntry.save();
 
     // Send check-in email to employee
-    await sendCheckInEmail(employee.email, dateFormat(checkInTime));
+    await sendCheckInEmail("tranducbinh2004@gmail.com", dateFormat(checkInTime));// use my own email for testing purpose for mailtrap only
     await sendTelegramMessage(`${employee.name} checked in at ${dateFormat(checkInTime)}`);
 
     res
