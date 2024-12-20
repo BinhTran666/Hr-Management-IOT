@@ -58,4 +58,22 @@ export const sendResetSuccessEmail = async (email) => {
     console.error("Error sending reset success email", error);
     throw new Error(`Failed to send reset success email: ${error.message}`);
   }
-}
+};
+
+export const sendCheckInEmail = async (email, checkInTime) => {
+  const recipient = [{ email }];
+
+  try {
+    const response = await mailtrapClient.send({
+      from: sender,
+      to: recipient,
+      subject: "Check-in successful",
+      html: `You have successfully checked in at ${checkInTime}`,
+      category: "Check-in",
+    });
+  } catch (error) {
+    console.error("Error sending check-in email", error);
+    throw new Error(`Failed to send check-in email: ${error.message}`);
+  }
+};
+

@@ -13,6 +13,7 @@ import managementRoutes from "./routes/management.js";
 import authRoutes from "./routes/auth.js";
 import debugRoutes from "./routes/debug.js";
 import checkinRoutes from "./routes/history.js";
+import chatbotRoutes from "./routes/chatBot.js";
 // Configuration
 dotenv.config();
 const app = express();
@@ -39,6 +40,7 @@ app.use("/api/management", managementRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/debug", debugRoutes);
 app.use("/api/checkin", checkinRoutes);
+app.use("/api/chatbot", chatbotRoutes);
 
 app.use(cors({
   origin: "http://localhost:3000", // URL FE

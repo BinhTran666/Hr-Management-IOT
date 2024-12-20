@@ -30,6 +30,7 @@ import {
     AdminPanelSettingsOutlined,
     TrendingUpOutlined,
     PieChartOutlined,
+    SmartToyOutlined,
 } from '@mui/icons-material'
 
 import { useEffect, useState } from 'react'
@@ -79,8 +80,8 @@ const navItems = [
         icon: <AdminPanelSettingsOutlined />,
     },
     {
-        text: "Performance",
-        icon: <TrendingUpOutlined />,
+        text: "Chat_Bot",
+        icon: <SmartToyOutlined />,
     },
 
 ];

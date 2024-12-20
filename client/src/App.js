@@ -10,6 +10,8 @@ import Login from "scenes/auth/login";
 import Signup from "scenes/auth/signup";
 import Employee from "scenes/content/employee";
 import Layout from "scenes/layout";
+import History from "scenes/content/history";
+import Chatbot from "scenes/content/chatbot";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -38,6 +40,22 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Employee />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/overview"
+                element={
+                  <ProtectedRoute>
+                    <History />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/chat_bot"
+                element={
+                  <ProtectedRoute>
+                    <Chatbot />
                   </ProtectedRoute>
                 }
               />

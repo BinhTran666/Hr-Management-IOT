@@ -7,21 +7,23 @@ const API_KEY = "AIzaSyBwJ6U1MCJ6F7rfy8ZQ4xKZdRY5kPZXMpk";
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 // Function to generate a response
-async function chatWithGemini(prompt) {
+export const chatbot = async (req, res) => {
   try {
     // Choose the Gemini model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    // Send the prompt and receive the response
+    const { prompt } = req.body; // Extract combined prompt
+
     const result = await model.generateContent(prompt);
     const response = await result.response;
+    const geminiText = response.text();
 
-    // Output the text response
-    console.log("Gemini Response:", response.text());
+    res.status(200).json({ text: geminiText });
   } catch (error) {
     console.error("Error:", error.message);
+    res.status(500).json({ error: "Failed to get response from Gemini." });
   }
-}
+};
 
 // JSON data in string format
 const jsonData = `
@@ -729,5 +731,5 @@ const jsonData = `
 ]
 `;
 
-const userPrompt = `Here is the user data: ${jsonData}. How many users? and how many female are there? List the  name of female`;
-chatWithGemini(userPrompt);
+// const userPrompt = `Here is the user data: ${jsonData}. How many users? and how many female are there? List the  name of female`;
+// chatWithGemini(userPrompt);

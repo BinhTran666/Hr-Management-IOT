@@ -1,5 +1,8 @@
 import { History } from "../models/history.js";
 import { Employee } from "../models/employee.js";
+import { sendCheckInEmail } from "../mailtrap/emails.js";
+import { dateFormat } from "../utils/dateFormat.js";
+import { sendTelegramMessage } from "../mobilephone/mobilephone.js";
 
 // Employee Check-in
 export const checkIn = async (req, res) => {
@@ -12,12 +15,17 @@ export const checkIn = async (req, res) => {
       return res.status(404).json({ message: "Employee not found" });
     }
 
+    const checkInTime = Date.now(); // Set check-in time explicitly
     // Create a new check-in record (always create a new one)
     const historyEntry = new History({
       employeeId: employee.employee_id, // Use employee_id
-      checkInTime: Date.now(), // Set check-in time explicitly
+      checkInTime: checkInTime, // Set check-in time explicitly
     });
     await historyEntry.save();
+
+    // Send check-in email to employee
+    await sendCheckInEmail(employee.email, dateFormat(checkInTime));
+    await sendTelegramMessage(`${employee.name} checked in at ${dateFormat(checkInTime)}`);
 
     res
       .status(200)
@@ -45,6 +53,50 @@ export const getEmployeeHistory = async (req, res) => {
 
     res.status(200).json(history);
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Get history and employee of that history for all employees
+export const getAllEmployeeHistory = async (req, res) => {
+  try {
+    const history = await History.find({}).sort({ checkInTime: -1 }).lean(); // Use lean() for plain JavaScript objects
+
+    // Get unique employee IDs from history
+    const uniqueEmployeeIds = [
+      ...new Set(history.map((entry) => entry.employeeId.toString())),
+    ]; // Extract and ensure unique IDs
+
+    // Find corresponding employees
+    const employees = await Employee.find({
+      employee_id: { $in: uniqueEmployeeIds },
+    });
+
+    // Create a map of employee_id to employee object for efficient lookup
+    const employeeMap = {};
+    employees.forEach((employee) => {
+      employeeMap[employee.employee_id] = employee;
+    });
+
+    // Join history with employee data
+    const joinedHistory = history.map((entry) => ({
+      ...entry,
+      employee: employeeMap[entry.employeeId], // Add employee details to each entry
+    }));
+
+    res.status(200).json(joinedHistory);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getAllHistory = async (req, res) => {
+  try {
+    const history = await History.find({}).sort({ checkInTime: -1 }).lean();
+    res.status(200).json(history);
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 };

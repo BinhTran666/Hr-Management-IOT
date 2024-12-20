@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 const BOT_TOKEN = "8092471964:AAGhLWjZ7pi1-OhMJC1rKAKBnnAkhynbHuY"; // Replace with your bot token
 const CHAT_ID = "-1002299176643";     // Replace with the chat ID
 
-async function sendTelegramMessage(message) {
+export const sendTelegramMessage= async(message) => {
   const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
   const data = {
     chat_id: CHAT_ID,
@@ -30,4 +30,4 @@ async function sendTelegramMessage(message) {
 }
 
 // Example usage
-sendTelegramMessage("Điểm danh em nhé");
+//sendTelegramMessage("Điểm danh em nhé");
