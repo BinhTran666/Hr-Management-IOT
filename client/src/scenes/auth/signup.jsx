@@ -12,16 +12,42 @@ import {
   Link,
 } from "@mui/material";
 import { PersonAdd } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const handleSignup = (e) => {
+
+  const navigate = useNavigate();
+
+  const handleSignup = async (e) => {
     e.preventDefault();
-    if (!email || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword || !name) {
       alert("Please fill all the fields");
       return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/auth/signup`,
+        { email, password, name },
+        { withCredentials: true }
+      );
+
+      // const { user } = response.data;
+
+      // // Dispatch Redux Action
+      // dispatch(login(user));
+      // console.log(user);
+
+      // Chuyển hướng tới Dashboard
+      navigate("/signin");
+    } catch (error) {
+      console.error(error.response?.data?.message || error.message);
+      alert(error.response?.data?.message || "Something went wrong");
     }
     console.log("Login");
   };
@@ -57,6 +83,17 @@ const Signup = () => {
             autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            sx={{ mb: 1 }}
+          />
+          <TextField
+            placeholder="Enter user name"
+            type="text"
+            margin="normal"
+            required
+            fullWidth
+            autoFocus
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             sx={{ mb: 1 }}
           />
           <TextField
